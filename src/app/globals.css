@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
   --background: #ffffff;
@@ -16,8 +19,71 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(45deg, #210060, #030072, #0062FF);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 100%;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 100%;
+  font-size: 56px;
+  font-weight: 700;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 100%;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+input {
+  width: 265px;
+  height: 34px;
+  background-color: #DDDDDD;
+  border-radius: 8px;
+}
+
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 110%;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+h5 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 110%;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 100%;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
 }
 
 @layer utilities {
