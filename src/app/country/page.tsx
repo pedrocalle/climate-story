@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CountryComponent from "../components/CountryComponent";
 import { useSearchParams } from "next/navigation";
 
@@ -23,14 +23,15 @@ export default function Country() {
     return;
   }
 
+  useEffect(() => {
+    console.log(lat);
+    console.log(lng);
+  });
+
   return (
     <div className="overflow-y-scroll">
       <div className="flex justify-center">
-        <CountryComponent
-          country={name.toLowerCase()}
-          scale={500}
-          center={[Number(lng), Number(lat)]}
-        />
+        <CountryComponent country={name.toLowerCase()} />
         <div className="flex items-center">
           <div>
             <h3 className="text-white">{name}</h3>

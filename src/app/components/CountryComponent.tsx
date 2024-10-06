@@ -1,62 +1,119 @@
 import React, { useState, useEffect } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { geoCentroid, geoBounds } from "d3-geo";
 
 interface CountryOutlineProps {
-    country: string;
-    scale: number; // Tamanho do país
-    center: [number, number]; // Coordenadas de centralização (longitude, latitude)
+  country: string;
 }
 
-const CountryOutline: React.FC<CountryOutlineProps> = ({ country, scale, center }) => {
-    const [geoData, setGeoData] = useState(null);
+const CountryOutline: React.FC<CountryOutlineProps> = ({ country }) => {
+  const [geoData, setGeoData] = useState<any>(null);
+  const [center, setCenter] = useState<[number, number]>([0, 0]);
+  const [scale, setScale] = useState(100);
+  const [containerSize, setContainerSize] = useState({
+    width: 800,
+    height: 600,
+  });
 
-    useEffect(() => {
-        // URL de um GeoJSON de fronteiras de países
-        fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
-            .then(response => response.json())
-            .then(data => setGeoData(data))
-            .catch(error => console.error("Error loading GeoJSON:", error));
-    }, []);
+  const [minMaxScale, setMinMaxScale] = useState({
+    minScale: 50,
+    maxScale: 500,
+  });
 
-    if (!geoData) return <div>Loading map...</div>;
+  useEffect(() => {
+    fetch(
+      "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setGeoData(data);
 
-    const fixedWidth = 500;  // Largura fixa
-    const fixedHeight = 500; // Altura fixa
+        const selectedCountry = data.features.find(
+          (feature: any) =>
+            feature.properties.ADMIN.toLowerCase() === country.toLowerCase()
+        );
 
-    return (
-        <div style={{ width: fixedWidth, height: fixedHeight }}>
-            <ComposableMap
-                projectionConfig={{
-                    scale: scale, // Controle do tamanho do país
-                    center: center, // Centraliza no país
-                }}
-                width={fixedWidth} // Largura fixa do mapa
-                height={fixedHeight} // Altura fixa do mapa
-                viewBox={`0 0 ${fixedWidth} ${fixedHeight}`} // Define a área visível do SVG
-            >
-                <Geographies geography={geoData}>
-                    {({ geographies }) =>
-                        geographies.map((geo) => {
-                            const geoName = geo.properties.ADMIN?.toLowerCase();
-                            const countryName = country.toLowerCase();
+        if (selectedCountry) {
+          const centroid = geoCentroid(selectedCountry);
+          setCenter(centroid as [number, number]);
 
-                            return geoName === countryName ? (
-                                <Geography
-                                    key={geo.rsmKey}
-                                    geography={geo}
-                                    style={{
-                                        default: { fill: "#FFF6C7" },
-                                        hover: { fill: "#FFF6C7" },
-                                        pressed: { fill: "#FFF6C7" },
-                                    }}
-                                />
-                            ) : null;
-                        })
-                    }
-                </Geographies>
-            </ComposableMap>
-        </div>
-    );
+          const bounds = geoBounds(selectedCountry);
+          const width = bounds[1][0] - bounds[0][0];
+          const height = bounds[1][1] - bounds[0][1];
+
+          // Cálculo da área do país
+          const area = width * height;
+
+          // Aumentando a escala para todos os países
+          const baseScaleFactor = 100; // Escala base
+          const areaFactor = Math.sqrt(area); // Ajusta a escala com base na área
+
+          // Definindo uma escala mínima e máxima
+          const minScale = 50; // Escala mínima
+          let maxScale = 600; // Escala máxima
+
+          if (
+            country == "canada" ||
+            country == "argentina" ||
+            country == "chile"
+          ) {
+            maxScale = 200;
+          }
+
+          const dynamicScale = Math.min(
+            Math.max(baseScaleFactor * areaFactor, minScale),
+            maxScale
+          );
+
+          setScale(dynamicScale);
+        }
+      })
+      .catch((error) => console.error("Error loading GeoJSON:", error));
+  }, [country, containerSize]);
+
+  if (!geoData) return <div>Loading map...</div>;
+
+  return (
+    <div
+      style={{
+        width: containerSize.width,
+        height: containerSize.height,
+        overflow: "visible",
+        position: "relative",
+      }}
+    >
+      <ComposableMap
+        projection="geoMercator"
+        projectionConfig={{
+          scale: scale, // Escala ajustada
+          center: center, // Centro baseado no centróide
+        }}
+        width={containerSize.width}
+        height={containerSize.height}
+      >
+        <Geographies geography={geoData}>
+          {({ geographies }) =>
+            geographies.map((geo) => {
+              const geoName = geo.properties.ADMIN?.toLowerCase();
+              const countryName = country.toLowerCase();
+
+              return geoName === countryName ? (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  style={{
+                    default: { fill: "#FFF6C7", stroke: "#000" },
+                    hover: { fill: "#FFF6C7" },
+                    pressed: { fill: "#FFF6C7" },
+                  }}
+                />
+              ) : null;
+            })
+          }
+        </Geographies>
+      </ComposableMap>
+    </div>
+  );
 };
 
 export default CountryOutline;
