@@ -96,11 +96,6 @@ export default function Country() {
                   grams of CO2 per square meter were emitted by fossil fuels in{" "}
                   {year}.
                 </p>
-                <a href="#info">
-                  <p className="font-inter text-2xl text-white w-80 underline">
-                    What does it mean?
-                  </p>
-                </a>
               </div>
             </div>
           </div>
