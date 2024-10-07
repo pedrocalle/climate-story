@@ -16,7 +16,7 @@ interface IResponse {
   totalSum: number;
 }
 
-export default function Country() {
+function CountryContent() {
   const [year, setYear] = useState<number>(2022);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<IResponse[]>();
@@ -166,10 +166,10 @@ export default function Country() {
   );
 }
 
-export function WrappedCountry() {
+export default function CountryPage() {
   return (
     <SuspenseBoundary>
-      <Country />
+      <CountryContent />
     </SuspenseBoundary>
   );
 }
