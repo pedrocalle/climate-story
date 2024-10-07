@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Circles } from "react-loader-spinner";
 import api from "../api/api";
 import { getColor } from "../../utils/colorGenerator";
+import SuspenseBoundary from "../components/SuspenseBoundaryComponent";
 
 interface IResponse {
   year: number;
@@ -162,5 +163,13 @@ export default function Country() {
         </>
       )}
     </div>
+  );
+}
+
+export function WrappedCountry() {
+  return (
+    <SuspenseBoundary>
+      <Country />
+    </SuspenseBoundary>
   );
 }
