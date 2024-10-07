@@ -18,11 +18,12 @@
 
 body {
   color: var(--foreground);
-  background: linear-gradient(45deg, #210060, #030072, #0062ff);
+  background: linear-gradient(45deg, #210060, #030072);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  overflow: hidden;
+  overflow-x: hidden;
+  margin: none;
 }
 
 h1 {

@@ -1,10 +1,11 @@
-import { CircleX, X } from "lucide-react";
+"use client";
+import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function RegisterForm() {
   const [isActive, setIsActive] = useState(false);
-  const bottomPosition = isActive ? "10%" : "-55%";
+  const [bottom, setBottom] = useState("5%");
 
   const router = useRouter();
   function handleNavigation() {
@@ -14,16 +15,18 @@ export function RegisterForm() {
   function handleClick() {
     if (isActive) {
       setIsActive(false);
+      setBottom("5%");
     } else {
       setIsActive(true);
+      setBottom("50%");
     }
   }
 
   return (
     <>
       <div
-        className="transition-all overflow-hidden absolute right-1/2 translate-x-1/2 pb-10 px-8 rounded-xl w-80 bg-translucent backdrop-blur-xl border-solid border-white border"
-        style={{ bottom: bottomPosition }}
+        style={{ bottom: bottom }}
+        className="transition-all absolute right-1/2 translate-x-1/2 translate-y-1/2 pb-10 px-8 rounded-xl w-80 bg-translucent backdrop-blur-xl border-solid border-white border"
       >
         <div onClick={handleClick}>
           <div className="flex justify-end mb-8 mt-2 -mr-5">
@@ -39,51 +42,45 @@ export function RegisterForm() {
           </div>
           <h5 className="text-white text-center mb-6">Get Started</h5>
         </div>
-        <div>
-          <form>
-            <label className="mb-1 text-white label" htmlFor="">
-              Name:
-            </label>
-            <input className="mb-2" type="text" id="name" />
-            <label className="mb-1 text-white label" htmlFor="">
-              Email:
-            </label>
-            <input className="mb-2" type="text" id="email" />
-            <label className="mb-1 text-white label" htmlFor="">
-              Country:
-            </label>
-            <input className="mb-2" type="text" id="country" />
-            <label className="mb-1 text-white label" htmlFor="">
-              Password:
-            </label>
-            <input className="mb-2" type="password" id="password" />
-            <label className="mb-1 text-white label" htmlFor="">
-              Confirm Password:
-            </label>
-            <input className="mb-5" type="password" id="confirm-password" />
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="checkbox"
-                className="w-4 h-4 mr-2 mt-1"
-              />
-              <label
-                htmlFor="checkbox"
-                className="font-extralight leading-1 text-white"
-              >
-                I would like to receive emails about climate emergencies.
+        {!isActive ? (
+          <></>
+        ) : (
+          <div>
+            <form>
+              <label className="mb-1 text-white label" htmlFor="">
+                Email:
               </label>
-            </div>
-            <div
-              className="flex justify-center mt-6"
-              onClick={handleNavigation}
-            >
-              <button className="uppercase button transition mx-auto text-white bg-gradient py-2 px-10 text-center rounded-md hover:drop-shadow-glow">
-                Sign me up
-              </button>
-            </div>
-          </form>
-        </div>
+              <input type="email" className="text-black px-2 mb-2" />
+              <div className="flex">
+                <label
+                  htmlFor="checkbox"
+                  className="font-extralight leading-4 text-white text-base"
+                >
+                  I would like to receive emails about climate emergencies.
+                </label>
+              </div>
+              <div
+                className="flex justify-center mt-6"
+                onClick={handleNavigation}
+              >
+                <button className="uppercase button transition mx-auto text-white bg-gradient py-2 px-10 text-center rounded-md hover:drop-shadow-glow">
+                  Sign me up
+                </button>
+              </div>
+              <div className="mt-2">
+                <p>
+                  Or just go to dashboard:{" "}
+                  <a
+                    className="text-blue-500 cursor-pointer underline"
+                    onClick={handleNavigation}
+                  >
+                    Dashboard
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </>
   );

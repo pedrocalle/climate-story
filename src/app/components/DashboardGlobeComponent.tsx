@@ -12,12 +12,10 @@ const DashboardGlobeComponent: React.FC = () => {
   const [hoverD, setHoverD] = useState<any>(null);
 
   useEffect(() => {
-    // Fetch the geojson data
     fetch("/data.geojson")
       .then((res) => res.json())
       .then(setCountries);
 
-    // Auto-rotate globe if it's loaded
     if (globeEl.current) {
       const rotateGlobe = () => {
         globeEl.current.controls().autoRotate = true;
@@ -37,8 +35,8 @@ const DashboardGlobeComponent: React.FC = () => {
   // Handle the click event on a country
   const handlePolygonClick = (d: any) => {
     const countryName = d.properties.ADMIN;
-    const lat = d.properties.LAT || d.geometry.coordinates[0][1]; // Get latitude
-    const lng = d.properties.LONG || d.geometry.coordinates[0][0]; // Get longitude
+    const lat = d.properties.LAT || d.geometry.coordinates[0][1];
+    const lng = d.properties.LONG || d.geometry.coordinates[0][0];
 
     // Redirect to the new page with the country data in the query params
     router.push(`/country?name=${countryName}&lat=${lat}&lng=${lng}`);

@@ -4,20 +4,17 @@ import { geoCentroid, geoBounds } from "d3-geo";
 
 interface CountryOutlineProps {
   country: string;
+  color: string;
 }
 
-const CountryOutline: React.FC<CountryOutlineProps> = ({ country }) => {
+const CountryOutline: React.FC<CountryOutlineProps> = ({ country, color }) => {
   const [geoData, setGeoData] = useState<any>(null);
   const [center, setCenter] = useState<[number, number]>([0, 0]);
   const [scale, setScale] = useState(100);
+
   const [containerSize, setContainerSize] = useState({
     width: 800,
     height: 600,
-  });
-
-  const [minMaxScale, setMinMaxScale] = useState({
-    minScale: 50,
-    maxScale: 500,
   });
 
   useEffect(() => {
@@ -102,9 +99,9 @@ const CountryOutline: React.FC<CountryOutlineProps> = ({ country }) => {
                   key={geo.rsmKey}
                   geography={geo}
                   style={{
-                    default: { fill: "#FFF6C7", stroke: "#000" },
-                    hover: { fill: "#FFF6C7" },
-                    pressed: { fill: "#FFF6C7" },
+                    default: { fill: color, stroke: "#000" },
+                    hover: { fill: color },
+                    pressed: { fill: color },
                   }}
                 />
               ) : null;

@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Climate Story",
+  title: "COMPair",
   description: "Platform to check CO2 emission around the world",
 };
 
