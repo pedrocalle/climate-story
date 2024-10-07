@@ -46,39 +46,37 @@ export function RegisterForm() {
           <></>
         ) : (
           <div>
-            <form>
-              <label className="mb-1 text-white label" htmlFor="">
-                Email:
-              </label>
-              <input type="email" className="text-black px-2 mb-2" />
-              <div className="flex">
-                <label
-                  htmlFor="checkbox"
-                  className="font-extralight leading-4 text-white text-base"
-                >
-                  I would like to receive emails about climate emergencies.
-                </label>
-              </div>
-              <div
-                className="flex justify-center mt-6"
-                onClick={handleNavigation}
+            <label className="mb-1 text-white label" htmlFor="">
+              Email:
+            </label>
+            <input type="email" className="text-black px-2 mb-2" />
+            <div className="flex">
+              <label
+                htmlFor="checkbox"
+                className="font-extralight leading-4 text-white text-base"
               >
-                <button className="uppercase button transition mx-auto text-white bg-gradient py-2 px-10 text-center rounded-md hover:drop-shadow-glow">
-                  Sign me up
-                </button>
-              </div>
-              <div className="mt-2">
-                <p>
-                  Or just go to dashboard:{" "}
-                  <a
-                    className="text-blue-500 cursor-pointer underline"
-                    onClick={handleNavigation}
-                  >
-                    Dashboard
-                  </a>
-                </p>
-              </div>
-            </form>
+                I would like to receive emails about climate emergencies.
+              </label>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={handleNavigation}
+                className="uppercase button transition mx-auto text-white bg-gradient py-2 px-10 text-center rounded-md hover:drop-shadow-glow"
+              >
+                Sign me up
+              </button>
+            </div>
+            <div className="mt-2">
+              <p>
+                Or just go to dashboard:{" "}
+                <a
+                  className="text-blue-500 cursor-pointer underline"
+                  onClick={handleNavigation}
+                >
+                  Dashboard
+                </a>
+              </p>
+            </div>
           </div>
         )}
       </div>
